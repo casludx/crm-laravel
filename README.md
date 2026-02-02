@@ -61,10 +61,9 @@ php artisan serve
 - **Incidencias**: Gestión de incidencias (título, descripción, estado, fecha)
 
 ## Tecnologías
-- Laravel 11
-- PHP 8.1+
+- Laravel
+- PHP 
 - MySQL
-- Blade Templates
 
 ## Autor
 Lucas Flores Benítez
