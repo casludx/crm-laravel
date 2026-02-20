@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('empresa');
             $table->string('email')->unique();
             $table->string('telefono');
+            $table->string('documento')->nullable();
             $table->timestamps();
         });
     }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Factura;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FacturaController extends Controller
 {
@@ -11,6 +12,11 @@ class FacturaController extends Controller
     {
         $facturas = Factura::all();
         return view('facturas.index', compact('facturas'));
+    }
+        
+    public function show(Factura $factura)
+    {
+        return redirect()->route('facturas.index');
     }
 
     public function create()
@@ -51,6 +57,10 @@ class FacturaController extends Controller
 
     public function destroy(Factura $factura)
     {
+        if (Auth::user()->role != 'admin') {
+            return redirect()->route('facturas.index')->with('error', 'No tienes permisos para eliminar');
+        }
+    
         $factura->delete();
         return redirect()->route('facturas.index')->with('success', 'Factura eliminada correctamente');
     }

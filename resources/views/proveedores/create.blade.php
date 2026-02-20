@@ -24,7 +24,7 @@
         </div>
     @endif
 
-    <form action="{{ route('proveedores.store') }}" method="POST">
+    <form action="{{ route('proveedores.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <label>Nombre:</label>
         <input type="text" name="nombre" value="{{ old('nombre') }}" required>
@@ -37,6 +37,9 @@
 
         <label>Teléfono:</label>
         <input type="text" name="telefono" value="{{ old('telefono') }}" required>
+
+        <label>Documento PDF:</label>
+        <input type="file" name="documento" accept=".pdf">
 
         <button type="submit">Guardar</button>
         <a href="{{ route('proveedores.index') }}">Cancelar</a>

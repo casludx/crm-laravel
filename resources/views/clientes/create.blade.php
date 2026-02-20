@@ -6,7 +6,7 @@
         body { font-family: Arial; margin: 20px; }
         form { max-width: 500px; }
         label { display: block; margin-top: 10px; }
-        input { width: 100%; padding: 8px; margin-top: 5px; }
+        input, textarea { width: 100%; padding: 8px; margin-top: 5px; }
         button { margin-top: 15px; padding: 10px 20px; background-color: #4CAF50; color: white; border: none; cursor: pointer; }
         .error { color: red; font-size: 12px; }
     </style>
@@ -24,7 +24,7 @@
         </div>
     @endif
 
-    <form action="{{ route('clientes.store') }}" method="POST">
+    <form action="{{ route('clientes.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <label>Nombre:</label>
         <input type="text" name="nombre" value="{{ old('nombre') }}" required>
@@ -37,6 +37,9 @@
 
         <label>Dirección:</label>
         <input type="text" name="direccion" value="{{ old('direccion') }}" required>
+
+        <label>Foto:</label>
+        <input type="file" name="foto" accept="image/*">
 
         <button type="submit">Guardar</button>
         <a href="{{ route('clientes.index') }}">Cancelar</a>

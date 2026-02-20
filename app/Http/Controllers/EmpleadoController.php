@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Empleado;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EmpleadoController extends Controller
 {
@@ -11,6 +12,11 @@ class EmpleadoController extends Controller
     {
         $empleados = Empleado::all();
         return view('empleados.index', compact('empleados'));
+    }
+    
+    public function show(Empleado $empleado)
+    {
+        return redirect()->route('empleados.index');
     }
 
     public function create()
@@ -51,6 +57,10 @@ class EmpleadoController extends Controller
 
     public function destroy(Empleado $empleado)
     {
+        if (Auth::user()->role != 'admin') {
+            return redirect()->route('empleados.index')->with('error', 'No tienes permisos para eliminar');
+        }
+    
         $empleado->delete();
         return redirect()->route('empleados.index')->with('success', 'Empleado eliminado correctamente');
     }

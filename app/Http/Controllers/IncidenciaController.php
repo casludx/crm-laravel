@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Incidencia;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class IncidenciaController extends Controller
 {
@@ -11,6 +12,11 @@ class IncidenciaController extends Controller
     {
         $incidencias = Incidencia::all();
         return view('incidencias.index', compact('incidencias'));
+    }
+
+    public function show(Incidencia $incidencia)
+    {
+        return redirect()->route('incidencias.index');
     }
 
     public function create()
@@ -51,6 +57,10 @@ class IncidenciaController extends Controller
 
     public function destroy(Incidencia $incidencia)
     {
+        if (Auth::user()->role != 'admin') {
+            return redirect()->route('incidencias.index')->with('error', 'No tienes permisos para eliminar');
+        }
+    
         $incidencia->delete();
         return redirect()->route('incidencias.index')->with('success', 'Incidencia eliminada correctamente');
     }

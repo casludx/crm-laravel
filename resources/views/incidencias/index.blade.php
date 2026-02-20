@@ -26,6 +26,19 @@
         <a href="{{ route('empleados.index') }}">Empleados</a>
         <a href="{{ route('facturas.index') }}">Facturas</a>
         <a href="{{ route('incidencias.index') }}">Incidencias</a>
+    
+        <div style="float: right;">
+            <span style="color: white; margin-right: 15px;">
+                👤 {{ Auth::user()->name }} 
+                @if(Auth::user()->role == 'admin')
+                    <span style="background-color: #ff9800; padding: 2px 6px; border-radius: 3px; font-size: 11px;">ADMIN</span>
+                @endif
+            </span>
+            <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                @csrf
+                <button type="submit" style="background-color: #f44336; color: white; border: none; padding: 10px; cursor: pointer; border-radius: 3px;">Cerrar Sesión</button>
+            </form>
+        </div>
     </nav>
 
     <h1>Listado de Incidencias</h1>
@@ -60,11 +73,14 @@
                 <td>{{ $incidencia->fecha }}</td>
                 <td>
                     <a href="{{ route('incidencias.edit', $incidencia) }}" class="btn btn-primary">Editar</a>
-                    <form action="{{ route('incidencias.destroy', $incidencia) }}" method="POST" style="display: inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estás seguro?')">Eliminar</button>
-                    </form>
+    
+                    @if(Auth::user()->role == 'admin')
+                        <form action="{{ route('incidencias.destroy', $incidencia) }}" method="POST" style="display: inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estás seguro?')">Eliminar</button>
+                        </form>
+                    @endif
                 </td>
             </tr>
             @endforeach

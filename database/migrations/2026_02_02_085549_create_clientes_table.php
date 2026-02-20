@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up()
     {
         Schema::create('clientes', function (Blueprint $table) {
@@ -17,6 +14,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('telefono');
             $table->string('direccion');
+            $table->string('foto')->nullable();
             $table->timestamps();
         });
     }
